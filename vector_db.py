@@ -1,3 +1,5 @@
+import weaviate-client as wc
+
 class VectorDB:
     def __init__(self):
         # In a real implementation, you would initialize your vector database here
