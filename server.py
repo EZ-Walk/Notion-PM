@@ -13,7 +13,7 @@ app = Flask(__name__)
 
 @app.route('/')
 def hello_world():
-    return 'Hello World!'
+    return "You've reached the Notion PM webhook server!"
 
 # @app.route('/notion-integration', methods=['POST'])
 # def notion_integration_webhook():
@@ -29,6 +29,7 @@ def notion_integration_webhook():
     import json
     with open('data.json', 'w') as f:
         json.dumps(data, f)
+    print(data)
     return 'Received Github integration webhook'
 
 if __name__ == '__main__':

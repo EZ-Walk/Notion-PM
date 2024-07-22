@@ -1,4 +1,4 @@
-import weaviate-client as wc
+import weaviate_client as wc
 
 class VectorDB:
     def __init__(self):
