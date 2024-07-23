@@ -21,4 +21,6 @@ wcwidth==0.2.13
 Werkzeug==3.0.3
 python-dotenv
 notion-client
-PyGithub
+# PyGithub
+urllib3
+requests

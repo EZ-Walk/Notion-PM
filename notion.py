@@ -1,7 +1,8 @@
 from notion_client import Client
 
-class NotionClient:
-    def __init__(self, api_key, agents_db_id, tasks_db_id):
+class NotionClient(Client):
+    def __init__(self, api_key):
+        super().__init__(auth=api_key)
         """
         Initializes the NotionClient with the provided API key, agents database ID, and tasks database ID.
         
@@ -10,9 +11,9 @@ class NotionClient:
             agents_db_id (str): The ID of the agents database.
             tasks_db_id (str): The ID of the tasks database.
         """
-        self.client = Client(auth=api_key)
-        self.agents_db_id = agents_db_id
-        self.tasks_db_id = tasks_db_id
+        # self.client = Client(auth=api_key)
+        # self.agents_db_id = agents_db_id
+        # self.tasks_db_id = tasks_db_id
 
     def get_agents(self):
         """

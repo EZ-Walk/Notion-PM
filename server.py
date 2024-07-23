@@ -1,5 +1,6 @@
 from flask import Flask, request
 from celery import Celery
+import json
 
 
 app = Flask(__name__)
@@ -26,11 +27,22 @@ def hello_world():
 def notion_integration_webhook():
     data = request.json
     # Process the data from the Notion integration
-    import json
+
     with open('data.json', 'w') as f:
         json.dumps(data, f)
     print(data)
     return 'Received Github integration webhook'
+
+# use another route when a release is published to github to trigger a workflow that writes the documentation to the Notion page linked at the top of the README.md
+@app.route('/release', methods=['POST'])
+def release_webhook():
+    data = request.json
+    # Process the data from the release webhook
+    print(data)
+    with open('release_data.json', 'w') as f:
+        json.dumps(data, f)
+
+    return 'Received release webhook'
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)
