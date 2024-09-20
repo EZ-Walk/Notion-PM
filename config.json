@@ -2,5 +2,11 @@
     "parent_page": {
         "page_id": "Notion-PM-9e05a70969624a799c0797eaafb9db68",
         "page_url": "https://www.notion.so/ezwalk/Notion-PM-9e05a70969624a799c0797eaafb9db68?pvs=4"
+    },
+    "strava": {
+        "client_secret": "bfe1a0c4db5dd93384f7a1ba94ef9946c5ffac51",
+        "client_id": "131144",
+        "refresh_token": "eab5686302b3f7eed9e029af24f80bd56d05d540",
+        "access_token": "1ac56d26cfb855a417c11aebd5d960254d8ac70c"
     }
 }
