@@ -41,10 +41,10 @@ def main():
                     agent.perform_task(task)
                     notion_client.mark_task_complete(task["id"])
 
-            time.sleep(60)  # Wait for 1 minute before checking for new tasks
+            time.sleep(5)  # Wait for 1 minute before checking for new tasks
         except Exception as e:
             print(f"An error occurred: {str(e)}")
-            time.sleep(60)  # Wait for 1 minute before retrying
+            time.sleep(5)  # Wait for 1 minute before retrying
 
 if __name__ == "__main__":
     main()

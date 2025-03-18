@@ -51,14 +51,115 @@
     <div class="container">
         <h1>Staff Room</h1>
         <h2>Process automation in Notion</h2>
-        <form>
-            <input type="email" placeholder="Enter your email" required>
-            <button type="submit">I'm stoked</button>
+        <form id="authForm">
+            <input type="email" id="emailInput" placeholder="Enter your email" required>
+            <button type="submit">Continue</button>
         </form>
+        <p style="margin-top: 1rem;">Don't have an account? <a href="/signup" style="color: white; text-decoration: underline;">Sign up</a></p>
+        <div id="signupForm" style="display: none;">
+            <input type="password" id="passwordInput" placeholder="Create a password" required>
+            <button id="completeSignup">Sign Up</button>
+        </div>
+        <p id="message" style="display: none;"></p>
     </div>
 </body>
 <script>
     window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
 </script>
 <script defer src="/_vercel/insights/script.js"></script>
+<script>
+    document.getElementById('authForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const email = document.getElementById('emailInput').value;
+        
+        fetch('/users/initiate_auth', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ email: email }),
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.isNewUser) {
+                document.getElementById('signupForm').style.display = 'block';
+                document.getElementById('message').textContent = data.message;
+            } else {
+                document.getElementById('message').textContent = data.message;
+            }
+            document.getElementById('message').style.display = 'block';
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            document.getElementById('message').textContent = 'An error occurred. Please try again.';
+            document.getElementById('message').style.display = 'block';
+        });
+    });
+
+    document.getElementById('completeSignup').addEventListener('click', function() {
+        const email = document.getElementById('emailInput').value;
+        const password = document.getElementById('passwordInput').value;
+        
+        fetch('/users/complete_signup', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ email: email, password: password }),
+        })
+        .then(response => response.json())
+        .then(data => {
+            document.getElementById('message').textContent = data.message;
+            document.getElementById('message').style.display = 'block';
+            document.getElementById('signupForm').style.display = 'none';
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            document.getElementById('message').textContent = 'An error occurred. Please try again.';
+            document.getElementById('message').style.display = 'block';
+        });
+    });
+
+    // Add this for login functionality
+    function login(email, password) {
+        fetch('/users/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ email: email, password: password }),
+        })
+        .then(response => response.json())
+        .then(data => {
+            document.getElementById('message').textContent = data.message;
+            document.getElementById('message').style.display = 'block';
+            // Store the token in localStorage or a secure cookie
+            localStorage.setItem('authToken', data.token);
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            document.getElementById('message').textContent = 'An error occurred. Please try again.';
+            document.getElementById('message').style.display = 'block';
+        });
+    }
+
+    // Add this for logout functionality
+    function logout() {
+        fetch('/users/logout', {
+            method: 'POST',
+        })
+        .then(response => response.json())
+        .then(data => {
+            document.getElementById('message').textContent = data.message;
+            document.getElementById('message').style.display = 'block';
+            // Remove the token from localStorage
+            localStorage.removeItem('authToken');
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            document.getElementById('message').textContent = 'An error occurred. Please try again.';
+            document.getElementById('message').style.display = 'block';
+        });
+    }
+</script>
 </html>

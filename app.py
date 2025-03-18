@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify, render_template
+from flask import Flask, request, jsonify, render_template, redirect, url_for
 from celery import Celery
 import json
 
@@ -11,10 +11,17 @@ app = Flask(__name__)
 
 # celery = Celery(app.name, broker=app.config['CELERY_BROKER_URL'])
 # celery.conf.update(app.config)
+from users.routes import users_bp
+app.register_blueprint(users_bp, url_prefix='/users')
+
 
 @app.route('/')
 def hello_world():
     return render_template('landing.html')
+
+@app.route('/signup')
+def signup():
+    return render_template('signup.html')
 
 @app.route('/repo', methods=['POST'])
 def notion_integration_webhook():
