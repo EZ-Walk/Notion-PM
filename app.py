@@ -1,5 +1,5 @@
 from flask import Flask, request, jsonify, render_template, redirect, url_for
-from celery import Celery
+# from celery import Celery
 import json
 
 

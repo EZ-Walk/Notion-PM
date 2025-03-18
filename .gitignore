@@ -1,4 +1,5 @@
-venv
+.venv
 .env
 playground.ipynb
 .vercel
+.vscode
